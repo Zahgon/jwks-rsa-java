@@ -2,7 +2,6 @@ package com.auth0.jwk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-
 import java.io.IOException;
 import java.net.*;
 import java.util.*;
@@ -20,12 +19,17 @@ public class UrlJwkProvider implements JwkProvider {
     private final AtomicReference<List<Jwk>> cachedJwks = new AtomicReference<>();
 
     final URL url;
+
     final Proxy proxy;
+
     final Map<String, String> headers;
+
     final Integer connectTimeout;
+
     final Integer readTimeout;
 
     private final ObjectReader reader;
+
     private final JwksHttpClient httpClient;
 
     /**
@@ -62,15 +66,12 @@ public class UrlJwkProvider implements JwkProvider {
         Util.checkArgument(url != null, "A non-null url is required");
         Util.checkArgument(connectTimeout == null || connectTimeout >= 0, "Invalid connect timeout value '" + connectTimeout + "'. Must be a non-negative integer.");
         Util.checkArgument(readTimeout == null || readTimeout >= 0, "Invalid read timeout value '" + readTimeout + "'. Must be a non-negative integer.");
-
         this.url = url;
         this.proxy = proxy;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
         this.reader = new ObjectMapper().readerFor(Map.class);
-
-        this.headers = (headers == null) ?
-                Collections.singletonMap("Accept", "application/json") : headers;
+        this.headers = (headers == null) ? Collections.singletonMap("Accept", "application/json") : headers;
         this.httpClient = new DefaultJwksHttpClient(connectTimeout, readTimeout, proxy, this.headers);
     }
 
@@ -87,7 +88,6 @@ public class UrlJwkProvider implements JwkProvider {
     public UrlJwkProvider(URL url, JwksHttpClient httpClient) {
         Util.checkArgument(url != null, "A non-null url is required");
         Util.checkArgument(httpClient != null, "A non-null httpClient is required");
-
         this.url = url;
         this.proxy = null;
         this.connectTimeout = null;
@@ -129,22 +129,11 @@ public class UrlJwkProvider implements JwkProvider {
 
     @VisibleForTesting
     void setCachedJwks(List<Jwk> jwks) {
-        this.cachedJwks.set(jwks);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static URL urlForDomain(String domain) {
-        Util.checkArgument(!Util.isNullOrEmpty(domain), "A domain is required");
-
-        if (!domain.startsWith("http")) {
-            domain = "https://" + domain;
-        }
-
-        try {
-            final URI uri = new URI(domain + WELL_KNOWN_JWKS_PATH).normalize();
-            return uri.toURL();
-        } catch (MalformedURLException | URISyntaxException e) {
-            throw new IllegalArgumentException("Invalid jwks uri", e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Map<String, Object> getJwks() throws SigningKeyNotFoundException {
@@ -157,21 +146,7 @@ public class UrlJwkProvider implements JwkProvider {
     }
 
     public List<Jwk> getAll() throws SigningKeyNotFoundException {
-        List<Jwk> jwks = new ArrayList<>();
-        @SuppressWarnings("unchecked") final List<Map<String, Object>> keys = (List<Map<String, Object>>) getJwks().get("keys");
-
-        if (keys == null || keys.isEmpty()) {
-            throw new SigningKeyNotFoundException("No keys found in " + url.toString(), null);
-        }
-
-        try {
-            for (Map<String, Object> values : keys) {
-                jwks.add(Jwk.fromValues(values));
-            }
-        } catch (IllegalArgumentException e) {
-            throw new SigningKeyNotFoundException("Failed to parse jwk from json", e);
-        }
-        return jwks;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private List<Jwk> getCachedJwks() throws JwkException {
@@ -194,12 +169,10 @@ public class UrlJwkProvider implements JwkProvider {
         if (foundKey.isPresent()) {
             return foundKey;
         }
-
         // Key not found — refreshing JWKS from remote
         synchronized (this) {
             List<Jwk> freshJwks = getAll();
             cachedJwks.set(freshJwks);
-
             return searchKey(freshJwks, keyId);
         }
     }
@@ -220,10 +193,6 @@ public class UrlJwkProvider implements JwkProvider {
 
     @Override
     public Jwk get(String keyId) throws JwkException {
-
-        return findKey(keyId).orElseThrow(() ->
-                new SigningKeyNotFoundException("No key found in " + url.toString() + " with kid " + keyId, null)
-        );
-
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -7,6 +7,7 @@ package com.auth0.jwk;
 public class RateLimitedJwkProvider implements JwkProvider {
 
     private final JwkProvider provider;
+
     private final Bucket bucket;
 
     /**
@@ -22,14 +23,11 @@ public class RateLimitedJwkProvider implements JwkProvider {
 
     @Override
     public Jwk get(final String keyId) throws JwkException {
-        if (!bucket.consume()) {
-            throw new RateLimitReachedException(bucket.willLeakIn());
-        }
-        return provider.get(keyId);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @VisibleForTesting
     JwkProvider getBaseProvider() {
-        return provider;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

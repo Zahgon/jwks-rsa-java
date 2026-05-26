@@ -26,3 +26,7 @@ out/
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
+.aider*
+logs/
+.commit0_scripts/
+.github/workflows/

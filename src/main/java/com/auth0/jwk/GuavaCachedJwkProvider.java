@@ -2,7 +2,6 @@ package com.auth0.jwk;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-
 import java.time.Duration;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -14,7 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class GuavaCachedJwkProvider implements JwkProvider {
 
     private final Cache<String, Jwk> cache;
+
     private final JwkProvider provider;
+
     @VisibleForTesting
     static final String NULL_KID_KEY = "null-kid";
 
@@ -37,11 +38,8 @@ public class GuavaCachedJwkProvider implements JwkProvider {
      */
     public GuavaCachedJwkProvider(final JwkProvider provider, long size, long expiresIn, TimeUnit expiresUnit) {
         this.provider = provider;
-        this.cache = CacheBuilder.newBuilder()
-                .maximumSize(size)
-                // configure using timeunit; see https://github.com/auth0/jwks-rsa-java/issues/136
-                .expireAfterWrite(expiresIn, expiresUnit)
-                .build();
+        this.cache = CacheBuilder.newBuilder().maximumSize(size).// configure using timeunit; see https://github.com/auth0/jwks-rsa-java/issues/136
+        expireAfterWrite(expiresIn, expiresUnit).build();
     }
 
     /**
@@ -57,22 +55,11 @@ public class GuavaCachedJwkProvider implements JwkProvider {
 
     @Override
     public Jwk get(final String keyId) throws JwkException {
-        try {
-            String cacheKey = keyId == null ? NULL_KID_KEY : keyId;
-            return cache.get(cacheKey, () -> provider.get(keyId));
-        } catch (ExecutionException e) {
-            // throw the proper exception directly, see https://github.com/auth0/jwks-rsa-java/issues/165
-            // cause should always be JwkException, but check just to be safe
-            if (e.getCause() instanceof JwkException) {
-                throw (JwkException) e.getCause();
-            }
-            // If somehow cause is not JwkException, just wrap
-            throw new JwkException("Unable to obtain key with kid " + keyId, e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @VisibleForTesting
     JwkProvider getBaseProvider() {
-        return provider;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -22,8 +22,11 @@ import java.util.Map;
 final class DefaultJwksHttpClient implements JwksHttpClient {
 
     private final Integer connectTimeout;
+
     private final Integer readTimeout;
+
     private final Proxy proxy;
+
     private final Map<String, String> headers;
 
     /**
@@ -34,42 +37,15 @@ final class DefaultJwksHttpClient implements JwksHttpClient {
      * @param proxy          proxy server to use (null for direct connection)
      * @param headers        request headers to send (null defaults to Accept: application/json)
      */
-    DefaultJwksHttpClient(Integer connectTimeout, Integer readTimeout,
-                          Proxy proxy, Map<String, String> headers) {
+    DefaultJwksHttpClient(Integer connectTimeout, Integer readTimeout, Proxy proxy, Map<String, String> headers) {
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
         this.proxy = proxy;
-        this.headers = (headers != null) ? headers :
-                Collections.singletonMap("Accept", "application/json");
+        this.headers = (headers != null) ? headers : Collections.singletonMap("Accept", "application/json");
     }
 
     @Override
     public JwksHttpResponse fetch(URL url) throws IOException {
-        final URLConnection c = (proxy == null) ? url.openConnection() : url.openConnection(proxy);
-
-        if (connectTimeout != null) {
-            c.setConnectTimeout(connectTimeout);
-        }
-        if (readTimeout != null) {
-            c.setReadTimeout(readTimeout);
-        }
-
-        for (Map.Entry<String, String> entry : headers.entrySet()) {
-            c.setRequestProperty(entry.getKey(), entry.getValue());
-        }
-
-        String body;
-        try (InputStream in = c.getInputStream();
-             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-            body = sb.toString();
-        }
-
-        Map<String, List<String>> responseHeaders = c.getHeaderFields();
-        return new JwksHttpResponse(body, responseHeaders);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

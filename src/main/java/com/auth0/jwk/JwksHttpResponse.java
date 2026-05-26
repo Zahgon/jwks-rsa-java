@@ -11,6 +11,7 @@ import java.util.Map;
 public final class JwksHttpResponse {
 
     private final String body;
+
     private final Map<String, List<String>> headers;
 
     /**
@@ -39,7 +40,7 @@ public final class JwksHttpResponse {
      * @return the response body
      */
     public String getBody() {
-        return body;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -48,7 +49,7 @@ public final class JwksHttpResponse {
      * @return an unmodifiable map of header names to their values
      */
     public Map<String, List<String>> getHeaders() {
-        return headers;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -63,12 +64,6 @@ public final class JwksHttpResponse {
      * @return the first header value, or null if not present
      */
     public String getHeaderValue(String name) {
-        for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-            if (entry.getKey() != null && entry.getKey().equalsIgnoreCase(name)) {
-                List<String> values = entry.getValue();
-                return (values != null && !values.isEmpty()) ? values.get(0) : null;
-            }
-        }
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

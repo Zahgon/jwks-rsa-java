@@ -2,6 +2,7 @@ package com.auth0.jwk;
 
 @SuppressWarnings("WeakerAccess")
 public class RateLimitReachedException extends JwkException {
+
     private final long availableInMs;
 
     public RateLimitReachedException(long availableInMs) {
@@ -15,7 +16,6 @@ public class RateLimitReachedException extends JwkException {
      * @return the time to wait in milliseconds before retrying the request.
      */
     public long getAvailableIn() {
-        return availableInMs;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

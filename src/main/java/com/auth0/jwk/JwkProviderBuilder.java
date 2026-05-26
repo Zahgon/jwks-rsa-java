@@ -5,7 +5,6 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import static com.auth0.jwk.UrlJwkProvider.urlForDomain;
 
 /**
@@ -15,15 +14,25 @@ import static com.auth0.jwk.UrlJwkProvider.urlForDomain;
 public class JwkProviderBuilder {
 
     private final URL url;
+
     private Proxy proxy;
+
     private Duration expiresIn;
+
     private Integer connectTimeout;
+
     private Integer readTimeout;
+
     private long cacheSize;
+
     private boolean cached;
+
     private BucketImpl bucket;
+
     private boolean rateLimited;
+
     private Map<String, String> headers;
+
     private JwksHttpClient httpClient;
 
     /**
@@ -75,8 +84,7 @@ public class JwkProviderBuilder {
      * @return the builder
      */
     public JwkProviderBuilder cached(boolean cached) {
-        this.cached = cached;
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -87,10 +95,7 @@ public class JwkProviderBuilder {
      * @return the builder
      */
     public JwkProviderBuilder cached(long cacheSize, Duration expiresIn) {
-        this.cached = true;
-        this.cacheSize = cacheSize;
-        this.expiresIn = expiresIn;
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -102,7 +107,7 @@ public class JwkProviderBuilder {
      * @return the builder
      */
     public JwkProviderBuilder cached(long cacheSize, long expiresIn, TimeUnit unit) {
-        return this.cached(cacheSize, Duration.ofSeconds(unit.toSeconds(expiresIn)));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -112,8 +117,7 @@ public class JwkProviderBuilder {
      * @return the builder
      */
     public JwkProviderBuilder rateLimited(boolean rateLimited) {
-        this.rateLimited = rateLimited;
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -125,8 +129,7 @@ public class JwkProviderBuilder {
      * @return the builder
      */
     public JwkProviderBuilder rateLimited(long bucketSize, long refillRate, TimeUnit unit) {
-        bucket = new BucketImpl(bucketSize, refillRate, unit);
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -136,8 +139,7 @@ public class JwkProviderBuilder {
      * @return the builder
      */
     public JwkProviderBuilder proxied(Proxy proxy) {
-        this.proxy = proxy;
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -151,9 +153,7 @@ public class JwkProviderBuilder {
      * @return the builder
      */
     public JwkProviderBuilder timeouts(int connectTimeout, int readTimeout) {
-        this.connectTimeout = connectTimeout;
-        this.readTimeout = readTimeout;
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -163,8 +163,7 @@ public class JwkProviderBuilder {
      * @return this builder instance
      */
     public JwkProviderBuilder headers(Map<String, String> headers) {
-        this.headers = headers;
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -200,8 +199,7 @@ public class JwkProviderBuilder {
      * @see JwksHttpClient
      */
     public JwkProviderBuilder httpClient(JwksHttpClient httpClient) {
-        this.httpClient = httpClient;
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -210,18 +208,6 @@ public class JwkProviderBuilder {
      * @return a newly created {@link JwkProvider}
      */
     public JwkProvider build() {
-        JwkProvider urlProvider;
-        if (this.httpClient != null) {
-            urlProvider = new UrlJwkProvider(url, this.httpClient);
-        } else {
-            urlProvider = new UrlJwkProvider(url, connectTimeout, readTimeout, proxy, headers);
-        }
-        if (this.rateLimited) {
-            urlProvider = new RateLimitedJwkProvider(urlProvider, bucket);
-        }
-        if (this.cached) {
-            urlProvider = new GuavaCachedJwkProvider(urlProvider, cacheSize, expiresIn);
-        }
-        return urlProvider;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

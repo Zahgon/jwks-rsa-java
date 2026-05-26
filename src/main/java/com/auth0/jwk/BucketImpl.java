@@ -8,10 +8,15 @@ import java.util.concurrent.TimeUnit;
 class BucketImpl implements Bucket {
 
     private final long size;
+
     private final long rate;
+
     private final TimeUnit rateUnit;
+
     private long available;
+
     private long accumDelta;
+
     private long startTime;
 
     BucketImpl(long size, long rate, TimeUnit rateUnit) {
@@ -36,43 +41,22 @@ class BucketImpl implements Bucket {
 
     @Override
     public synchronized long willLeakIn() {
-        return willLeakIn(1);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public synchronized long willLeakIn(long count) {
-        assertPositiveValue(count, size, String.format("Cannot consume %d tokens when the BucketImpl size is %d!", count, size));
-        updateAvailableTokens();
-        if (available >= count) {
-            return 0;
-        }
-
-        long leakDelta = getTimeSinceLastTokenAddition();
-        if (leakDelta < getRatePerToken()) {
-            leakDelta = getRatePerToken() - leakDelta;
-        }
-        final long remaining = count - available - 1;
-        if (remaining > 0) {
-            leakDelta += getRatePerToken() * remaining;
-        }
-        return leakDelta;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public synchronized boolean consume() {
-        return consume(1);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public synchronized boolean consume(long count) {
-        assertPositiveValue(count, size, String.format("Cannot consume %d tokens when the BucketImpl size is %d!", count, size));
-        updateAvailableTokens();
-
-        if (count <= available) {
-            available -= count;
-            return true;
-        }
-        return false;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void updateAvailableTokens() {
@@ -81,7 +65,6 @@ class BucketImpl implements Bucket {
         if (elapsed < ratePerToken) {
             return;
         }
-
         accumDelta = elapsed % ratePerToken;
         long count = elapsed / ratePerToken;
         if (count > size - available) {

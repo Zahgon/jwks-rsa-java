@@ -1,13 +1,12 @@
 package com.auth0.jwk;
 
 class Util {
+
     static boolean isNullOrEmpty(String s) {
-        return s == null || s.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static void checkArgument(boolean arg, String message) {
-        if (!arg) {
-            throw new IllegalArgumentException(String.valueOf(message));
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }
